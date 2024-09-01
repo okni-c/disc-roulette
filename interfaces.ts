@@ -5,9 +5,8 @@ type AlbumData = {
   rating: string;
 };
 
-interface TableConfig<T> {
+interface TableConfig {
   label: string;
   description: string;
   headers: string[];
-  rows: T[];
 }

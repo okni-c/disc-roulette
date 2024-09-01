@@ -18,9 +18,10 @@ import {
 } from "@/components/ui/table";
 
 export default function AlbumTable({
-  config,
+  config, rows
 }: {
-  config: TableConfig<AlbumData>;
+  config: TableConfig;
+  rows: any[] | null
 }) {
   return (
     <Card>
@@ -46,9 +47,9 @@ export default function AlbumTable({
             </TableRow>
           </TableHeader>
           <TableBody>
-            {config &&
-              config.rows.map((row) => (
-                <TableRow>
+            {rows &&
+              rows.map((row) => (
+                <TableRow key={row.album_title}>
                   <TableCell>
                     <div className="font-medium">{row.album_title}</div>
                   </TableCell>
@@ -57,7 +58,7 @@ export default function AlbumTable({
                   </TableCell>
                   <TableCell className="hidden sm:table-cell">
                     <Badge className="text-xs" variant="secondary">
-                      {row.genre}
+                      {row.release_year}
                     </Badge>
                   </TableCell>
                   <TableCell className="text-right">{row.rating}</TableCell>
