@@ -1,47 +1,45 @@
 import AlbumTable from "@/components/custom/album-table";
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
+import { createClient } from '@/utils/supabase/server'
+import { cookies } from 'next/headers'
 
-const config: TableConfig<AlbumData> = {
+const config: TableConfig = {
   label: "Individual User Scores",
-  description:
-    "A list of recent reviews from real users for this album.",
-  headers: ["Username", "Rating", "Genre Bias", "Rating"],
-  rows: [
-    {
-      album_title: "dyatsinko",
-      artist: "The Silent Waves",
-      genre: "Ambient",
-      rating: "3.56",
-    },
-    {
-      album_title: "Midnight Jazz",
-      artist: "Luna Quartet",
-      genre: "Jazz",
-      rating: "9.32",
-    },
-    {
-      album_title: "Electric Dreams",
-      artist: "Neon Pulse",
-      genre: "Electronic",
-      rating: "8.12",
-    },
-    {
-      album_title: "Acoustic Vibes",
-      artist: "Guitar Heroes",
-      genre: "Acoustic",
-      rating: "6.99",
-    },
-    {
-      album_title: "Rock Revolution",
-      artist: "Thunderstrike",
-      genre: "Rock",
-      rating: "2.33",
-    },
-  ],
+  description: "A list of recent reviews from real users for this album.",
+  headers: ["Username", "Comments", "Genre Bias", "Rating"],
 };
 
-export default function AlbumPage({ params }: { params: { slug: string } }) {
+const rows: any = [
+  {
+    album_title: "dyatsinko",
+    artist: "I loved this.",
+    release_year: "Ambient",
+    rating: "3.56",
+  },
+  {
+    album_title: "nullmxwll",
+    artist: "Strange. Just Strange.",
+    release_year: "Jazz",
+    rating: "2.32",
+  },
+  {
+    album_title: "PeterParker",
+    artist: "I shoot webs.",
+    release_year: "Electronic",
+    rating: "8.12",
+  }
+];
+
+export default async function AlbumPage({ params }: { params: { slug: string } }) {
+  const cookieStore = cookies()
+  const supabase = createClient(cookieStore)
+
+  const { data: album } = await supabase
+    .from('albums')
+    .select('*')
+    .eq('id', params.slug); // Filter by id column
+
   return (
     <main className="w-full mt-10">
       <div className="px-10 flex justify-between">
@@ -54,7 +52,7 @@ export default function AlbumPage({ params }: { params: { slug: string } }) {
         />
         <div className="flex flex-col gap-5">
           <div className="flex flex-col gap-2">
-            <h1 className="text-6xl font-bold">Vertigo Remastered</h1>
+            <h1 className="text-6xl font-bold">{JSON.stringify(album)}</h1>
             <p className="text-5xl font-extralight">Groove Armada</p>
           </div>
           <div className="flex gap-5">
@@ -68,7 +66,7 @@ export default function AlbumPage({ params }: { params: { slug: string } }) {
         </div>
       </div>
       <div className="pt-10 px-10">
-        <AlbumTable config={config} />
+        <AlbumTable config={config} rows={rows} />
       </div>
     </main>
   );

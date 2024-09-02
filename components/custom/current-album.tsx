@@ -11,7 +11,7 @@ import Link from "next/link";
 
 export default function CurrentAlbum() {
   return (
-    <Link href={`/album/1234`}>
+    <Link href={`/album/1`}>
       <Card className="sm:col-span-2">
         <CardHeader className="pb-3">
           <p>Current album:</p>
