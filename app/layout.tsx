@@ -6,27 +6,11 @@ import Image from "next/image";
 import Link from "next/link";
 import {
   ChartAreaIcon,
-  Disc2,
   Disc3,
-  GitGraph,
-  Home,
-  LineChart,
-  Music2,
-  Package,
-  Package2,
   PanelLeft,
   Settings,
-  ShoppingCart,
-  Users2,
+  SquareLibrary,
 } from "lucide-react";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -78,6 +62,18 @@ export default function RootLayout({
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <Link
+                      href="/all-albums"
+                      className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+                    >
+                      <SquareLibrary className="h-5 w-5" />
+                      <span className="sr-only">All Albums</span>
+                    </Link>
+                  </TooltipTrigger>
+                  <TooltipContent side="right">All Albums</TooltipContent>
+                </Tooltip>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Link
                       href="/your-ratings"
                       className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
                     >
@@ -119,6 +115,13 @@ export default function RootLayout({
                     >
                       <Disc3 className="h-5 w-5 transition-all group-hover:scale-110" />
                       <span className="sr-only">DiscRater</span>
+                    </Link>
+                    <Link
+                      href="/all-albums"
+                      className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+                    >
+                      <SquareLibrary className="h-5 w-5" />
+                      All Albums
                     </Link>
                     <Link
                       href="/your-ratings"

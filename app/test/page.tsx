@@ -1,24 +1,17 @@
-
-import AlbumTable from '@/components/custom/album-table';
-import { createClient } from '@/utils/supabase/server'
-import { cookies } from 'next/headers'
+import { createClient } from "@/utils/supabase/server";
+import { cookies } from "next/headers";
 
 export default async function Page() {
-  const cookieStore = cookies()
-  const supabase = createClient(cookieStore)
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
 
-  const {data: rows} = await supabase.from('albums').select('*');
-
-  const config: TableConfig = {
-    label: "All Albums rated",
-    description:
-      "A list of recent reviews from real users for this album.",
-    headers: ["Title", "Artist", "Release year", "Rating"]
-  };
+  let { data, error } = await supabase.rpc("getrandomalbums");
+  if (error) console.error(error);
+  else console.log(data);
 
   return (
     <div>
-      <AlbumTable config={config} rows={rows} />
+      <pre>{JSON.stringify(data, null, 3)}</pre>
     </div>
-  )
+  );
 }
