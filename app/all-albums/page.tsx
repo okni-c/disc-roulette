@@ -14,7 +14,7 @@ export default function Page() {
 
   useEffect(() => {
     handlePageChange(1);
-  }, []);
+  });
 
   const handlePageChange = async (newPage: number) => {
     setPage(newPage);
